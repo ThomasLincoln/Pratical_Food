@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "210741613184",
+    "firebase_url": "https://practical-food-c436b.firebaseio.com",
+    "project_id": "practical-food-c436b",
+    "storage_bucket": "practical-food-c436b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:210741613184:android:67c8997b8ff0f1b2ca0c65",
+        "android_client_info": {
+          "package_name": "com.practical_food"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "210741613184-6ndgvshm28rtscj7j0q4o9eu2ohqhh5h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWYjV2RmEIfVXixNCYeWqblGKtDLiDHUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "210741613184-6ndgvshm28rtscj7j0q4o9eu2ohqhh5h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
