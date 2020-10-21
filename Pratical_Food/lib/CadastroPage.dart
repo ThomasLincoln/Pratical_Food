@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
+class CadastroPage extends StatefulWidget {
 
   //Senha no começo vai ta oculta pew pew
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _CadastroPageState createState() => _CadastroPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _CadastroPageState extends State<CadastroPage> {
   bool _obscureText = true;
 
   void _toggle() {
@@ -21,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Container(
         padding: EdgeInsets.only(
-          top: 150,
+          top: 80,
           left: 40,
           right: 40,
         ),
@@ -40,7 +40,19 @@ class _LoginPageState extends State<LoginPage> {
               autofocus: false,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                  labelText: "Digite seu email",
+                  labelText: "DIgite seu email",
+                  labelStyle: TextStyle(
+                    color: Colors.black38,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                  )),
+              style: TextStyle(fontSize: 20),
+            ),
+            TextFormField(
+              autofocus: false,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                  labelText: "Digite seu email novamente",
                   labelStyle: TextStyle(
                     color: Colors.black38,
                     fontWeight: FontWeight.w400,
@@ -65,24 +77,31 @@ class _LoginPageState extends State<LoginPage> {
               style: TextStyle(fontSize: 20),
               obscureText: _obscureText,             
             ),
+            TextFormField(
+              autofocus: false,
+              keyboardType: TextInputType.visiblePassword,
+              decoration: InputDecoration(
+                  labelText: "Digite sua senha novamente",
+                  labelStyle: TextStyle(
+                    letterSpacing: 1.0,
+                    color: Colors.black38,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                  )),
+              style: TextStyle(fontSize: 20),
+              obscureText: _obscureText,             
+            ),
             new FlatButton(
               onPressed: _toggle, 
               child: new Text(_obscureText ? "Mostrar" : "Ocultar")), //botaozada de mostrar/ocultar senha
 
             new RaisedButton(
-              child: Text ('Logar'),
+              child: Text ('Cadastrar'),
               color: Colors.yellow,
               onPressed: (){
                 Navigator.pushNamed(context, '/third');
               }
            ), //botao login
-            new RaisedButton(
-              child: Text ('Cadastrar'),
-              color: Colors.yellow,
-              onPressed: (){
-                Navigator.pushNamed(context, '/second');
-              }
-           ) //botao cadastro
           ],
         ),
       ),

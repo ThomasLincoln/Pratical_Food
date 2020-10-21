@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:Pratical_Food/LoginPage.dart';
+import 'package:Pratical_Food/CadastroPage.dart';
+import 'package:Pratical_Food/MenuPage.dart';
+
 
 void main() {
   runApp(AppTodo());
@@ -10,12 +13,14 @@ class AppTodo extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'Practical Food',
-      debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
-        primarySwatch: Colors.yellow,
-      ),
-      home: LoginPage(),
-    );
+    // Parça isso aqui ta completamente diferente mas ta começando no msm lugar, eu precisei fazer isso pra conseguir ir de pagina em pagina
+    initialRoute: '/',
+    routes: {
+      // o '/' é pra dar nome pras paginas pra navegar certinho e pow pow
+      '/': (context) => LoginPage(),
+      '/second': (context) => CadastroPage(),
+      '/third': (context) => MenuPage(),
+    });
   }
 }
-// id : practical-food-c436b
+
