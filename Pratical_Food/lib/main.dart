@@ -1,26 +1,93 @@
 import 'package:flutter/material.dart';
-import 'package:Pratical_Food/LoginPage.dart';
-import 'package:Pratical_Food/CadastroPage.dart';
-import 'package:Pratical_Food/MenuPage.dart';
 
+class LoginPage extends StatefulWidget {
 
-void main() {
-  runApp(AppTodo());
+  //Senha no começo vai ta oculta pew pew
+  @override
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class AppTodo extends StatelessWidget {
+class _LoginPageState extends State<LoginPage> {
+  bool _obscureText = true;
+
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  } //função que faz o texto ficar oculto ou não
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Practical Food',
-    // Parça isso aqui ta completamente diferente mas ta começando no msm lugar, eu precisei fazer isso pra conseguir ir de pagina em pagina
-    initialRoute: '/',
-    routes: {
-      // o '/' é pra dar nome pras paginas pra navegar certinho e pow pow
-      '/': (context) => LoginPage(),
-      '/second': (context) => CadastroPage(),
-      '/third': (context) => MenuPage(),
-    });
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.only(
+          top: 150,
+          left: 40,
+          right: 40,
+        ),
+        color: Colors.white,
+        child: ListView(
+          children: <Widget>[
+            SizedBox(
+              width: 128,
+              height: 128,
+              child: Image.asset("assets/ednaldo.png"),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              autofocus: false,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                  labelText: "Digite seu email",
+                  labelStyle: TextStyle(
+                    color: Colors.black38,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                  )),
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextFormField(
+              autofocus: false,
+              keyboardType: TextInputType.visiblePassword,
+              decoration: InputDecoration(
+                  labelText: "Digite sua senha",
+                  labelStyle: TextStyle(
+                    letterSpacing: 1.0,
+                    color: Colors.black38,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
+                  )),
+              style: TextStyle(fontSize: 20),
+              obscureText: _obscureText,             
+            ),
+            new FlatButton(
+              onPressed: _toggle, 
+              child: new Text(_obscureText ? "Mostrar" : "Ocultar")), //botaozada de mostrar/ocultar senha
+
+            new RaisedButton(
+              child: Text ('Logar'),
+              color: Colors.yellow,
+              onPressed: (){
+                Navigator.pushNamed(context, '/third');
+              }
+           ), //botao login
+            new RaisedButton(
+              child: Text ('Cadastrar'),
+              color: Colors.yellow,
+              onPressed: (){
+                Navigator.pushNamed(context, '/second');
+              }
+           ) //botao cadastro
+          ],
+        ),
+      ),
+    );
   }
 }
 
+// flutter run -t lib/pages/main.dart

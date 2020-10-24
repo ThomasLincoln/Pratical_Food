@@ -9,8 +9,15 @@ class FavoritosPage extends StatefulWidget {
 class _FavoritosPageState extends State<FavoritosPage> {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: Text('Favoritos')
-    );
+    return new Row(
+        children: <Widget>[
+          Expanded(
+            child: Container(
+               child: Text('Favoritos', textAlign: TextAlign.center, style: TextStyle (fontSize: 24)),
+               margin: const EdgeInsets.symmetric(vertical: 40.0),
+            )
+          )
+        ]
+      );
   }
 }
