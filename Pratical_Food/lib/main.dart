@@ -14,7 +14,7 @@ class AppTodo extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.yellow,
       ),
-      home: LoginPage(),
+      home: Loginpage(),
     );
   }
 }

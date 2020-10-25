@@ -1,58 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'Pages/home.dart';
 
-class LoginPage extends StatelessWidget {
+class Loginpage extends StatefulWidget {
+  @override
+  _LoginpageState createState() => _LoginpageState();
+}
+
+class _LoginpageState extends State<Loginpage> {
+  final formKey = new GlobalKey<FormState>();
+
+  String _email;
+  String _password;
+
+  bool validateAndSave() {
+    final form = formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      print('tudo certo carai, Email: $_email, Password: $_password');
+    } else {
+      print('tem algo errado ai carai');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(
-          top: 150,
-          left: 40,
-          right: 40,
-        ),
-        color: Colors.white,
-        child: ListView(
-          children: <Widget>[
-            SizedBox(
-              width: 128,
-              height: 128,
-              child: Image.asset("assets/ednaldo.jpg"),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              autofocus: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                  labelText: "seu email de ednaldo gang",
-                  labelStyle: TextStyle(
-                    color: Colors.black38,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                  )),
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              autofocus: false,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                  labelText: "senha ednaldo gang",
-                  labelStyle: TextStyle(
-                    letterSpacing: 2.0,
-                    color: Colors.black38,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                  )),
-              style: TextStyle(fontSize: 20),
-            )
-          ],
-        ),
-      ),
+    return new Scaffold(
+      body: new Container(
+          padding: EdgeInsets.all(16.0),
+          child: new Form(
+              key: formKey,
+              child: new Column(
+                children: <Widget>[
+                  new TextFormField(
+                    decoration: new InputDecoration(labelText: 'email'),
+                    validator: (value) =>
+                        value.isEmpty ? 'tem que digitar corno' : null,
+                    onSaved: (value) => _email = value,
+                  ),
+                  new TextFormField(
+                    decoration: new InputDecoration(labelText: "senha"),
+                    validator: (value) =>
+                        value.isEmpty ? 'tem que digitar corno' : null,
+                    onSaved: (value) => _password = value,
+                  ),
+                  new RaisedButton(
+                    child: new Text("login"),
+                    onPressed: validateAndSave,
+                  )
+                ],
+              ))),
     );
   }
 }
-// flutter run -t lib/pages/main.dart
