@@ -1,0 +1,5 @@
+void _toggle() {
+  setState(() {
+    _obscureText = !_obscureText;
+  });
+} //função que faz o texto ficar oculto ou não

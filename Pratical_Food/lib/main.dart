@@ -1,94 +1,106 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(App());
+}
+
+class App extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'title',
+      home: LoginPage(),
+    );
+  }
+}
 
 class LoginPage extends StatefulWidget {
-
   //Senha no começo vai ta oculta pew pew
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  bool _obscureText = true;
+enum FormType {
+  login,
+  register,
+}
 
-  void _toggle() {
+class _LoginPageState extends State<LoginPage> {
+  final formKey = new GlobalKey<FormState>();
+
+  String _email;
+  String _password;
+  FormType _formType = FormType.login;
+
+  bool validateAndSave() {
+    final form = formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void validateAndSubmit() async {
+    try {
+      final form = formKey.currentState;
+      if (validateAndSave()) {
+        form.save();
+        FirebaseUser user = (await FirebaseAuth.instance
+                .signInWithEmailAndPassword(email: _email, password: _password))
+            .user;
+        print('logou ai: ' + user.uid);
+      }
+    } catch (e) {
+      print('Error $e');
+    }
+  }
+
+  void moveToRegister() {
     setState(() {
-      _obscureText = !_obscureText;
+      _formType = FormType.register;
     });
-  } //função que faz o texto ficar oculto ou não
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(
-          top: 150,
-          left: 40,
-          right: 40,
-        ),
-        color: Colors.white,
-        child: ListView(
-          children: <Widget>[
-            SizedBox(
-              width: 128,
-              height: 128,
-              child: Image.asset("assets/ednaldo.png"),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              autofocus: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                  labelText: "Digite seu email",
-                  labelStyle: TextStyle(
-                    color: Colors.black38,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                  )),
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              autofocus: false,
-              keyboardType: TextInputType.visiblePassword,
-              decoration: InputDecoration(
-                  labelText: "Digite sua senha",
-                  labelStyle: TextStyle(
-                    letterSpacing: 1.0,
-                    color: Colors.black38,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                  )),
-              style: TextStyle(fontSize: 20),
-              obscureText: _obscureText,             
-            ),
-            new FlatButton(
-              onPressed: _toggle, 
-              child: new Text(_obscureText ? "Mostrar" : "Ocultar")), //botaozada de mostrar/ocultar senha
-
-            new RaisedButton(
-              child: Text ('Logar'),
-              color: Colors.yellow,
-              onPressed: (){
-                Navigator.pushNamed(context, '/third');
-              }
-           ), //botao login
-            new RaisedButton(
-              child: Text ('Cadastrar'),
-              color: Colors.yellow,
-              onPressed: (){
-                Navigator.pushNamed(context, '/second');
-              }
-           ) //botao cadastro
-          ],
-        ),
-      ),
-      home: Loginpage(),
+    return new Scaffold(
+      body: new Container(
+          padding: EdgeInsets.all(16.0),
+          child: new Form(
+              key: formKey,
+              child: new Column(
+                children: <Widget>[
+                  new RaisedButton(
+                    child: new Text("login"),
+                    onPressed: validateAndSubmit,
+                  ),
+                  new RaisedButton(
+                    child: new Text('criar uma conta '),
+                    onPressed: moveToRegister,
+                  ),
+                ],
+              ))),
     );
   }
-}
 
-// flutter run -t lib/pages/main.dart
+  List<Widget> buildInputs() {
+    return {
+      new TextFormField(
+        decoration: new InputDecoration(labelText: 'email'),
+        validator: (value) => value.isEmpty ? 'tem que digitar corno' : null,
+        onSaved: (value) => _email = value,
+      ),
+      new TextFormField(
+        decoration: new InputDecoration(labelText: "senha"),
+        validator: (value) => value.isEmpty ? 'tem que digitar corno' : null,
+        onSaved: (value) => _password = value,
+      ),
+    };
+  }
+}
