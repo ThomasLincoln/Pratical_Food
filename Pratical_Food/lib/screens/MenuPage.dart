@@ -1,6 +1,6 @@
-import 'package:Pratical_Food/FavoritosPage.dart';
+import 'package:Pratical_Food/screens/FavoritosPage.dart';
 import 'package:Pratical_Food/HomePage.dart';
-import 'package:Pratical_Food/ListaCompras.dart';
+import 'package:Pratical_Food/screens/ListaCompras.dart';
 import 'package:flutter/material.dart';
 
 class MenuPage extends StatefulWidget {
