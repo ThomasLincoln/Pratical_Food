@@ -63,6 +63,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       ),
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
@@ -76,7 +77,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             icon:
              Icon(Icons.favorite),
             title: Text('Favoritos'),
-          ),         
+          ), 
+          BottomNavigationBarItem(
+            icon:
+             Icon(Icons.arrow_back),
+            title: Text('Sair'),
+          ),          
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.yellow[800],
