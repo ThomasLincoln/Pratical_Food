@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 
 class HomePage extends StatefulWidget {
@@ -12,10 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    FirebaseFirestore.instance.collection('receitas').doc('nome').set({
-      'nome': 'pinto',
-      'mano': 'queisso',
-    });
+    
     return new Column(
         children: <Widget>[
           Expanded(
@@ -25,18 +24,25 @@ class _HomePageState extends State<HomePage> {
               margin: const EdgeInsets.symmetric(vertical: 40.0),
             )
           ),
-          Expanded(child: GridView.count(
-              crossAxisCount: 2,
-            children: List.generate(30, (index) {
-              return new Card(
-                elevation: 10.0,
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(20.0)
-                ),
-                child: new Container (child: new Text("Comida", style: TextStyle(fontSize:18), textAlign: TextAlign.center,)),
+          Expanded(child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance.collection('receitas').snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+              if (!snapshot.hasData) return const Text('Carregando');
+              final int messageCount = snapshot.data.docs.length;
+              return GridView.builder(
+                itemCount: messageCount,
+                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                itemBuilder: (_, int index){
+                  final DocumentSnapshot document = snapshot.data.docs[index];
+                  dynamic message1 = document.data()['nome'];
+                  String nomeReceita = message1 != null ? message1.toString() : 'Sem receita amigao';
+                  return new Card(
+                    child: Text(nomeReceita));
+                }
               );
-            })
-         )          )
+            },
+          )
+          )
         ]
       );
   }
