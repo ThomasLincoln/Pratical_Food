@@ -1,6 +1,7 @@
 import 'package:Pratical_Food/screens/FavoritosPage.dart';
 import 'package:Pratical_Food/HomePage.dart';
 import 'package:Pratical_Food/screens/ListaCompras.dart';
+import 'package:Pratical_Food/screens/MenuDeslogar.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -15,14 +16,14 @@ class _MenuPageState extends State<MenuPage> {
 
  @override
   Widget build(BuildContext context) {
-    FirebaseFirestore.instance.collection('receitas').doc('nome').set({
-      'nome': 'pinto',
-      'mano': 'queisso',
-    });
-    FirebaseFirestore.instance.collection("receitas").add({
-    'name': "Tokyo",
-    'country': "Japan"
-});
+//     FirebaseFirestore.instance.collection('receitas').doc('nome').set({
+//       'nome': 'pinto',
+//       'mano': 'queisso',
+//     });
+//     FirebaseFirestore.instance.collection("receitas").add({
+//     'name': "Tokyo",
+//     'country': "Japan"
+// });
     return MaterialApp(
       title: _title,
       home: MyStatefulWidget(),
@@ -47,6 +48,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     HomePage(),   
     ListaCompras(),  
     FavoritosPage(),
+    MenuDeslogar(),
   ];
 
   void _onItemTapped(int index) {
@@ -71,7 +73,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
-            title: Text('Lista de Compras'),
+            title: Text('Carrinho'),
           ),
           BottomNavigationBarItem(
             icon:
