@@ -16,14 +16,14 @@ class _MenuPageState extends State<MenuPage> {
 
  @override
   Widget build(BuildContext context) {
-    FirebaseFirestore.instance.collection('receitas').doc('nome').set({
-      'nome': 'pinto',
-      'mano': 'queisso',
-    });
-    FirebaseFirestore.instance.collection("receitas").add({
-    'name': "Tokyo",
-    'country': "Japan"
-});
+//     FirebaseFirestore.instance.collection('receitas').doc('nome').set({
+//       'nome': 'pinto',
+//       'mano': 'queisso',
+//     });
+//     FirebaseFirestore.instance.collection("receitas").add({
+//     'name': "Tokyo",
+//     'country': "Japan"
+// });
     return MaterialApp(
       title: _title,
       home: MyStatefulWidget(),
