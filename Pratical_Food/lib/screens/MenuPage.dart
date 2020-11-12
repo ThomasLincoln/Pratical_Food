@@ -1,7 +1,7 @@
 import 'package:Pratical_Food/screens/FavoritosPage.dart';
 import 'package:Pratical_Food/HomePage.dart';
 import 'package:Pratical_Food/screens/ListaCompras.dart';
-import 'package:Pratical_Food/screens/MenuDeslogar.dart';
+import 'package:Pratical_Food/screens/PesquisaPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -48,7 +48,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     HomePage(),   
     ListaCompras(),  
     FavoritosPage(),
-    MenuDeslogar(),
+    PesquisaPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -61,7 +61,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.yellow[600],
-        title: const Text('Página Inicial', style: TextStyle(color: Colors.black)),     
+        title: const Text('Pratical Food', style: TextStyle(color: Colors.black)),     
       ),
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -82,8 +82,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ), 
           BottomNavigationBarItem(
             icon:
-             Icon(Icons.arrow_back),
-            title: Text('Sair'),
+             Icon(Icons.search),
+            title: Text('Pesquisar'),
           ),          
         ],
         currentIndex: _selectedIndex,

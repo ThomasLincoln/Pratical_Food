@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                                       stream: FirebaseFirestore.instance.collection('receitas').doc(id).collection('ingredientes').snapshots(),
                                       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
                                         if (!snapshot.hasData) return const Text('Carregando...');
-                                        final int messageCountIngredientes = snapshot.data.docs.length; r
+                                        final int messageCountIngredientes = snapshot.data.docs.length;
                                         
                                         return Container(child: ListView.builder(
                                           scrollDirection: Axis.vertical,
