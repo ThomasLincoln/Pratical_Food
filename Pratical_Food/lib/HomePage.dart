@@ -8,6 +8,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+List<String> filtro;
 //qaolquer comentario ai
 
 class _HomePageState extends State<HomePage> {
@@ -19,9 +20,17 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             flex: 0,
             child: Container(
-              child: Text('Receitas', textAlign: TextAlign.center, style: TextStyle (fontSize: 24)),
-              margin: const EdgeInsets.symmetric(vertical: 40.0),
-            )
+              child: Padding(padding: EdgeInsets.only(top: 12),
+                child: IconButton(
+                  tooltip: 'Adicionar filtros',
+                  icon: Icon(Icons.filter_alt, color: Colors.black), 
+                  onPressed: (){
+                    
+                    //filtro.add(value)
+                  }
+                ),
+              ),
+            ),
           ),
           Expanded(child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance.collection('receitas').snapshots(),
@@ -42,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                       child: new GridTile(child: Column(
                         children: [Expanded(child: new Image.asset(endereco,fit: BoxFit.cover,)),
                         Padding(padding: EdgeInsets.only(top: 6, bottom: 6),
-                        child: Text(nomeReceita),)                       
+                        child: Text(nomeReceita, textAlign: TextAlign.center,))                       
                         ]
                       )
                       //new Image.asset(endereco,height: 150,width: 100,)
@@ -72,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                                               icon: Icon(Icons.favorite),
                                               tooltip: 'Adicionar aos favoritos',
                                               onPressed: (){
-                                                FirebaseFirestore.instance.collection('usuarios').doc('Jose').collection('favoritos').doc(nomeReceita).set({
+                                                FirebaseFirestore.instance.collection('usuarios').doc('Jose').collection('favoritos').doc(id).set({
                                                   'nome':message1,
                                                   'ID':message5,
                                                 });
