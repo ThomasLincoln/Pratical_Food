@@ -20,8 +20,8 @@ class _PesquisaPageState extends State<PesquisaPage> {
         children: <Widget>[
           Expanded(
             child: Container(
-               child: Text('Pesquisar', textAlign: TextAlign.center, style: TextStyle (fontSize: 24)),
-               margin: const EdgeInsets.symmetric(vertical: 40.0),
+               child: Text('', textAlign: TextAlign.center, style: TextStyle (fontSize: 24)),
+               margin: const EdgeInsets.symmetric(vertical: 0.0),
             )
           ),
           TextFormField(

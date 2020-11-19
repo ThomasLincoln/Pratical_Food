@@ -64,11 +64,23 @@ class _HomePageState extends State<HomePage> {
                                       //children: <Widget>[
                                         new Container(
                                             padding: const EdgeInsets.only(top: 30.0), //parte de cima da imagem
-                                            child: new Image.asset(endereco,height: 150,width: 220,),
+                                            child: new Image.asset(endereco,height: 150,width: 220,),                                           
                                         ),
                                         new Padding(
+                                            padding: const EdgeInsets.all(0),
+                                              child:IconButton(
+                                              icon: Icon(Icons.favorite),
+                                              tooltip: 'Adicionar aos favoritos',
+                                              onPressed: (){
+                                                FirebaseFirestore.instance.collection('usuarios').doc('Jose').collection('favoritos').doc(nomeReceita).set({
+                                                  'nome':message1,
+                                                  'ID':message5,
+                                                });
+                                              }),
+                                            ),
+                                        new Padding(
                                           padding: EdgeInsets.all(20.0),
-                                          child: Text(nomeReceita, style: TextStyle(fontSize: 20)), //tamanho do texto
+                                          child: Text(nomeReceita, textAlign: TextAlign.center, style: TextStyle(fontSize: 20)), //tamanho do texto
                                         ),                                      
                                     //),
                                     Padding(
@@ -96,7 +108,8 @@ class _HomePageState extends State<HomePage> {
                                             String unidadeIngrediente = unidade != null ? unidade.toString() : 'Sem unidade';
                                             return Padding(
                                               padding: EdgeInsets.only(left: 20,right: 20),
-                                              child: new Text(idIngrediente + " " + quantidadeIngrediente + " " + unidadeIngrediente));
+                                              child: new Text(idIngrediente + ": " + quantidadeIngrediente + " " + unidadeIngrediente)
+                                            );
                                           },
                                         ));
                                       }, 
