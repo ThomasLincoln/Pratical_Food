@@ -47,7 +47,7 @@ class _PesquisaPageState extends State<PesquisaPage> {
                 itemCount: ingredienteCount,
                 itemBuilder: (_, index){
                   final DocumentSnapshot document = snapshot.data.docs[index];
-                  dynamic message1 = document.data()['ID'];
+                  dynamic message1 = document.data()['nome'];
                   String nomeIngrediente = message1 != null ? message1.toString() : 'Sem ingrediente!!!';
                   dynamic message5 = document.data()['ID'];
                   String id = message5 != null ? message5.toString() : 'sem ID';

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 
@@ -8,13 +9,23 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-List<String> filtro;
+List<String> filtroNome = [];
+List<String> filtroID = [];
 //qaolquer comentario ai
+
+class Receita{
+  String nome, id, modoDePreparo;
+  List<Ingrediente> ingredientes;
+}
+
+class Ingrediente{
+  String nome, id;
+}
 
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    
+    filtroID = [];
     return new Column(
         children: <Widget>[
           Expanded(
@@ -24,121 +35,145 @@ class _HomePageState extends State<HomePage> {
                 child: IconButton(
                   tooltip: 'Adicionar filtros',
                   icon: Icon(Icons.filter_alt, color: Colors.black), 
-                  onPressed: (){
-                    
-                    //filtro.add(value)
-                  }
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: (context){
+                      return new Card(
+                        child: Padding(padding: EdgeInsets.only(left: 10, top: 20, bottom: 10),
+                        child: Row(
+                          children: <Widget>[
+                            IconButton(icon: Icon(Icons.select_all), onPressed: () => filtraReceitas(filtroID)),
+                            Expanded(
+                              child: StreamBuilder<QuerySnapshot>(
+                            stream: FirebaseFirestore.instance.collection('ingredientes').snapshots(),
+                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+                              if (!snapshot.hasData) return const Text('Carregando...');
+                              final int ingredienteCount = snapshot.data.docs.length;
+                              return ListView.builder(
+                                itemCount: ingredienteCount,
+                                itemBuilder: (_, index){
+                                  final DocumentSnapshot document = snapshot.data.docs[index];
+                                  dynamic message1 = document.data()['nome'];
+                                  String nomeIngrediente = message1 != null ? message1.toString() : 'Sem ingrediente!!!';
+                                  dynamic message5 = document.data()['ID'];
+                                  String id = message5 != null ? message5.toString() : 'sem ID';
+                                  return new Card(
+                                    child: Padding(padding: EdgeInsets.all(10),
+                                    child: Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: Text(nomeIngrediente),
+                                        ),
+                                        Expanded(
+                                          flex: 0, 
+                                          child: FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: IconButton(tooltip: 'Adicionar filtro', icon: Icon(Icons.filter_alt),
+                                            
+                                              onPressed:(){
+                                                setState(() {
+                                                  filtroNome.add(nomeIngrediente);
+                                                  filtroID.add(id);
+                                                });
+                                                
+                                              } 
+                                          )  
+                                        )
+                                      )
+                                      ],
+                                    )                   
+                                    )
+                                  );
+                                  },                 
+                                );
+                              }
+                            )
+                            ),
+                          ],
+                        )                   
+                        )
+                      ); 
+                    }
+                    )
                 ),
               ),
             ),
           ),
-          Expanded(child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('receitas').snapshots(),
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-              if (!snapshot.hasData) return const Text('Carregando...');
-              final int messageCount = snapshot.data.docs.length;
-              return GridView.builder(
-                itemCount: messageCount,
-                gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                itemBuilder: (_, int index){
-                  final DocumentSnapshot document = snapshot.data.docs[index];
-                  dynamic message1 = document.data()['nome'];
-                  String nomeReceita = message1 != null ? message1.toString() : 'Sem receita';
-                  dynamic message2 = document.data()['endereço'];
-                  String endereco = message2 != null ? message2.toString() : 'Sem imagem';
-                  return new Card(
-                    child: new GestureDetector(
-                      child: new GridTile(child: Column(
-                        children: [Expanded(child: new Image.asset(endereco,fit: BoxFit.cover,)),
-                        Padding(padding: EdgeInsets.only(top: 6, bottom: 6),
-                        child: Text(nomeReceita, textAlign: TextAlign.center,))                       
-                        ]
-                      )
-                      //new Image.asset(endereco,height: 150,width: 100,)
-                      ),
-                      onTap: ()async {await showDialog(
-                        context: context,
-                        builder: (BuildContext context){
-                          dynamic message3 = document.data()['modoDePreparo'];
-                          String modoDePreparo = message3 != null ? message3.toString() : 'Sem descrição';
-                          dynamic message5 = document.data()['ID'];
-                          String id = message5 != null ? message5.toString() : 'sem ID';
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: 10, top: 30),
-                            child: Dialog(
-                              child: Container(
-                                child: Column(
-                                  children: <Widget>[
-                                    //Row(
-                                      //children: <Widget>[
-                                        new Container(
-                                            padding: const EdgeInsets.only(top: 30.0), //parte de cima da imagem
-                                            child: new Image.asset(endereco,height: 150,width: 220,),                                           
-                                        ),
-                                        new Padding(
-                                            padding: const EdgeInsets.all(0),
-                                              child:IconButton(
-                                              icon: Icon(Icons.favorite),
-                                              tooltip: 'Adicionar aos favoritos',
-                                              onPressed: (){
-                                                FirebaseFirestore.instance.collection('usuarios').doc('Jose').collection('favoritos').doc(id).set({
-                                                  'nome':message1,
-                                                  'ID':message5,
-                                                });
-                                              }),
-                                            ),
-                                        new Padding(
-                                          padding: EdgeInsets.all(20.0),
-                                          child: Text(nomeReceita, textAlign: TextAlign.center, style: TextStyle(fontSize: 20)), //tamanho do texto
-                                        ),                                      
-                                    //),
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                                      child: new Text(modoDePreparo, style: TextStyle(fontSize: 15), textAlign: TextAlign.justify),                                     
-                                    ),
-                                   
-                                    StreamBuilder<QuerySnapshot>(
-                                      stream: FirebaseFirestore.instance.collection('receitas').doc(id).collection('ingredientes').snapshots(),
-                                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                                        if (!snapshot.hasData) return const Text('Carregando...');
-                                        final int messageCountIngredientes = snapshot.data.docs.length;
-                                        
-                                        return Container(child: ListView.builder(
-                                          scrollDirection: Axis.vertical,
-                                          shrinkWrap: true,               
-                                          itemCount: messageCountIngredientes,
-                                          itemBuilder: (_, int index){
-                                            final DocumentSnapshot document = snapshot.data.docs[index];
-                                            dynamic ingrediente1 = document.data()['ID'];
-                                            String idIngrediente = ingrediente1 != null ? ingrediente1.toString() : 'Sem ID';
-                                            dynamic quantidade = document.data()['quantidade'];
-                                            String quantidadeIngrediente = quantidade != null ? quantidade.toString() : 'Sem quantidade';
-                                            dynamic unidade = document.data()['unidade'];
-                                            String unidadeIngrediente = unidade != null ? unidade.toString() : 'Sem unidade';
-                                            return Padding(
-                                              padding: EdgeInsets.only(left: 20,right: 20),
-                                              child: new Text(idIngrediente + ": " + quantidadeIngrediente + " " + unidadeIngrediente)
-                                            );
-                                          },
-                                        ));
-                                      }, 
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-                        );
-                      }
-                    )
-                  );
-                }
-              );
-            },
+          Expanded(child: GridView.builder(
+            itemCount: filtroNome.length,           
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 7/2),
+            itemBuilder: (BuildContext context, int index){
+              return new GestureDetector(
+                onTap: (){
+                  setState(() {
+                    filtroNome.removeAt(index);
+                    filtroID.removeAt(index);
+                  });                 
+                },
+                child: Card(
+                  child: new GridTile(
+                    child: Text(filtroNome[index], textAlign: TextAlign.center,)
+                  ),
+                )
+              );  
+            }
           )
-          )
+          ),         
         ]
       );
   }
+}
+
+Future<List<Receita>> filtraReceitas(List<String> filtro) async{
+  List<Receita> retornoAux = new List<Receita>();
+  List<Receita> retorno = new List<Receita>();
+  await FirebaseFirestore.instance.collection('receitas').get().then((value) async{ 
+    value.docs.forEach((element) async{
+      Receita receita = new Receita();
+      receita.nome = element.data()['nome'];
+      receita.id = element.data()['ID'];
+      retornoAux.add(receita);
+      
+    });
+  });
+  for (int i = 0; i < retornoAux.length; i++){
+    retornoAux[i].ingredientes = await getIngredientes(retornoAux[i].id);
+  }
+  
+  retornoAux.forEach((element) {
+    if (buscaFiltro(element, filtro)) retorno.add(element);
+  });
+  for (int i = 0; i < retorno.length; i++){
+    
+    print(retorno[i].nome);
+    print(retorno[i].id);
+    for (int j = 0; j < retorno[i].ingredientes.length; j++){
+      print(retorno[i].ingredientes[j].nome);
+      print(retorno[i].ingredientes[j].id);
+      
+    }
+    print('\n');
+  }
+}
+
+Future<List<Ingrediente>> getIngredientes(String idReceita) async{
+  List<Ingrediente> retornoAux = new List<Ingrediente>();
+  await FirebaseFirestore.instance.collection('receitas').doc(idReceita).collection('ingredientes').get().then((value) async{
+    value.docs.forEach((element) {
+      Ingrediente ingrediente = new Ingrediente();
+      ingrediente.id = element.data()['ID'];
+      ingrediente.nome = element.data()['nome'];
+      retornoAux.add(ingrediente);
+
+    });
+  });
+  return retornoAux;
+}
+
+bool buscaFiltro(Receita receita, List<String> filtro){
+  int contador = 0;
+  for (int i = 0; i < receita.ingredientes.length; i++){
+    if (filtro.contains(receita.ingredientes[i].id)) contador++;
+  }
+  return filtro.length == contador;
 }
