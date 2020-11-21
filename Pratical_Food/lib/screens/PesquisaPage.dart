@@ -39,7 +39,7 @@ class _PesquisaPageState extends State<PesquisaPage> {
           Expanded(
           flex: 4,
           child: StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('ingredientes').where('ID', isEqualTo: filtro).snapshots(),
+            stream: filtro != null ? FirebaseFirestore.instance.collection('ingredientes').where('nome', isGreaterThanOrEqualTo: filtro).where('nome', isLessThan: filtro + 'z').snapshots(): FirebaseFirestore.instance.collection('ingredientes').snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
               if (!snapshot.hasData) return const Text('Carregando...');
               final int ingredienteCount = snapshot.data.docs.length;
@@ -71,12 +71,6 @@ class _PesquisaPageState extends State<PesquisaPage> {
                               } 
                           )  
                         )
-                        // new Container(
-                        //   child: Text(nomeIngrediente, textAlign: TextAlign.left,),
-                        // ),
-                        // new Container(
-                        //   child: Icon(Icons.add_shopping_cart),
-                        //
                       )
                       ],
                     )                   
