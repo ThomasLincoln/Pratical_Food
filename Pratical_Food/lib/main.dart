@@ -1,5 +1,5 @@
+
 import 'package:Pratical_Food/authenticate/authenticate.dart';
-import 'package:Pratical_Food/homesoquedementira.dart';
 import 'package:Pratical_Food/screens/LoginPage.dart';
 import 'package:Pratical_Food/services/auth.dart';
 import 'package:Pratical_Food/wrapper.dart';
@@ -28,7 +28,7 @@ class App extends StatelessWidget {
       // o '/' é pra dar nome pras paginas pra navegar certinho e pow pow
       '/': (context) => Wrapper(),
       '/second': (context) => CadastroPage(),
-      '/third': (context) => Homezada(),
+      '/third': (context) => MenuPage(),
     }));
   }
 

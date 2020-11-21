@@ -4,6 +4,7 @@ import 'package:Pratical_Food/screens/ListaCompras.dart';
 import 'package:Pratical_Food/screens/PesquisaPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class MenuPage extends StatefulWidget {
   @override
