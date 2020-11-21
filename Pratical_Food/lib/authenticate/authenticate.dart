@@ -1,5 +1,7 @@
+import 'package:Pratical_Food/authenticate/register.dart';
+import 'package:Pratical_Food/screens/CadastroPage.dart';
+import 'package:Pratical_Food/screens/LoginPage.dart';
 import 'package:flutter/material.dart';
-import 'package:Pratical_Food/services/sign_in.dart';
 
 class Authenticate extends StatefulWidget {
   @override
@@ -7,10 +9,22 @@ class Authenticate extends StatefulWidget {
 }
 
 class _AuthenticateState extends State<Authenticate> {
+  bool showSignIn = true;
+
+  void toggleView() {
+    setState(() => showSignIn = !showSignIn);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Sign(),
-    );
+    if (showSignIn) {
+      return Container(
+        child: LoginPage(toggleView: toggleView),
+      );
+    } else {
+      return Container(
+        child: CadastroPage(toggleView: toggleView),
+      );
+    }
   }
 }

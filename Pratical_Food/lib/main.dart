@@ -1,3 +1,5 @@
+import 'package:Pratical_Food/authenticate/authenticate.dart';
+import 'package:Pratical_Food/homesoquedementira.dart';
 import 'package:Pratical_Food/screens/LoginPage.dart';
 import 'package:Pratical_Food/services/auth.dart';
 import 'package:Pratical_Food/wrapper.dart';
@@ -17,24 +19,26 @@ void main() async {
 class App extends StatelessWidget {
   @override
    Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Practical Food',
+    return StreamProvider<User>.value(
+    value: AuthService().user,
+    child: MaterialApp(
     // Parça isso aqui ta completamente diferente mas ta começando no msm lugar, eu precisei fazer isso pra conseguir ir de pagina em pagina
     initialRoute: '/',
     routes: {
       // o '/' é pra dar nome pras paginas pra navegar certinho e pow pow
-      '/': (context) => LoginPage(),
+      '/': (context) => Wrapper(),
       '/second': (context) => CadastroPage(),
-      '/third': (context) => MenuPage(),
-    });
+      '/third': (context) => Homezada(),
+    }));
   }
-  // Widget build(BuildContext context) {
-  //   return StreamProvider<User>.value(
-  //     value: AuthService().user,
-  //     child: MaterialApp(
+
+  //     
+  //     
   //       home: LoginPage(),
   //     ),
   //   );
     
   // }
 }
+ //   return new MaterialApp(
+ //     title: 'Practical Food',
