@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               width: 128,
               height: 128,
-              child: Image.asset("assets/ednaldo.jpg"),
+              child: Image.asset("assets/logo.jpg"),
             ),
             SizedBox(
               height: 20,
@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
 
             //espaço do email
             TextFormField(
-              validator: (val) => val.isEmpty ? 'O email está incorreta' : null,
+              validator: (val) => val.isEmpty ? 'O email está incorreto' : null,
               onChanged: (val) {
                 setState(() => email = val);
               },
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
 
             // espaço da senha
             TextFormField(
-              validator: (val) => val.length < 6 ? 'digita algo maior' : null,
+              validator: (val) => val.length < 6 ? 'Digite pelo menos 6 caracteres' : null,
               onChanged: (val) {
                 setState(() => password = val);
               },
@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                     dynamic result =
                         await _auth.signInWithEmailAndPassword(email, password);
                     if (result == null) {
-                      setState(() => error = 'arruma ai o bagulho');
+                      setState(() => error = 'Credenciais Incorretas');
                     }
                   }
                 }),

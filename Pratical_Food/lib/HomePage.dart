@@ -15,7 +15,7 @@ List<String> filtroID = [];
 //qaolquer comentario ai
 
 class Receita{
-  String nome, id, modoDePreparo, endereco;
+  String nome, id, modoDePreparo, endereco, nivel;
   List<Ingrediente> ingredientes;
 }
 
@@ -178,10 +178,10 @@ class _HomePageState extends State<HomePage> {
                           context: context,
                           builder: (BuildContext context){
                             return Padding(
-                              padding: EdgeInsets.only(bottom: 10, top: 30),
+                              padding: EdgeInsets.only(bottom: 30, top: 30),
                               child: Dialog(
-                                child: Container(
-                                  child: Column(
+                                child: Expanded(
+                                  child: ListView(
                                     children: <Widget>[
                                       new Container(
                                         padding: const EdgeInsets.only(top: 30), //parte de cima da imagem
@@ -203,7 +203,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       new Padding(
                                         padding: EdgeInsets.all(20),
-                                        child: Text(listaReceitas[index].nome, textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),// Tamanho do texto
+                                        child: Text(listaReceitas[index].nome + "\n" + "Nível: "+ listaReceitas[index].nivel, textAlign: TextAlign.center, style: TextStyle(fontSize: 20)),// Tamanho do texto
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -216,12 +216,15 @@ class _HomePageState extends State<HomePage> {
                                           itemCount: listaReceitas[index].ingredientes.length,
                                           itemBuilder: (_, int index1){
                                             return Padding(
-                                              padding: EdgeInsets.only(left: 20, right: 20),
+                                              padding: EdgeInsets.only(left: 20, right: 20, bottom: 5),
                                               child: new Text(listaReceitas[index].ingredientes[index1].nome + ": " + listaReceitas[index].ingredientes[index1].quantidade + " " + listaReceitas[index].ingredientes[index1].unidade)
                                             );
                                           }
                                         ),
                                       ),
+                                      Padding(
+                                        padding: EdgeInsets.only(bottom: 15)
+                                      )
                                     ],
                                   )
                                 ),
@@ -254,6 +257,7 @@ Future<List<Receita>> filtraReceitas(List<String> filtro) async{
       receita.id = element.data()['ID'];
       receita.modoDePreparo = element.data()['modoDePreparo'];
       receita.endereco = element.data()['endereço'];
+      receita.nivel = element.data()['nivel'];
       retornoAux.add(receita);
       
     });

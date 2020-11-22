@@ -31,7 +31,7 @@ class _CadastroPageState extends State<CadastroPage> {
     return Scaffold(
         body: Container(
       padding: EdgeInsets.only(
-        top: 80,
+        top: 60,
         left: 40,
         right: 40,
       ),
@@ -43,7 +43,7 @@ class _CadastroPageState extends State<CadastroPage> {
             SizedBox(
               width: 128,
               height: 128,
-              child: Image.asset("assets/ednaldo.png"),
+              child: Image.asset("assets/logo.jpg"),
             ),
             SizedBox(
               height: 20,
@@ -90,7 +90,7 @@ class _CadastroPageState extends State<CadastroPage> {
             //¹senha¹
             TextFormField(
               validator: (val) => val.length < 6
-                  ? 'A senha deve contar no minimo 6 caracteres'
+                  ? 'A senha deve contar no minimo com 6 caracteres'
                   : null,
               onChanged: (val) {
                 setState(() => password = val);
@@ -112,7 +112,7 @@ class _CadastroPageState extends State<CadastroPage> {
             //senha²
             TextFormField(
               validator: (val) => val.length < 6
-                  ? 'A senha deve contar no minimo 6 caracteres'
+                  ? 'A senha deve contar no minimo com 6 caracteres'
                   : null,
               onChanged: (val) {
                 setState(() => password2 = val);

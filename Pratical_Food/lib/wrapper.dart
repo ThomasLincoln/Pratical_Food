@@ -14,10 +14,10 @@ class Wrapper extends StatelessWidget {
     print(user);
     //retorna home ou retorna authenticateq
     if (user == null) {
-      print('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
+      //print('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb');
       return Authenticate();
     } else {
-      print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+      //print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
       return Material(
         child: MenuPage(),
       );

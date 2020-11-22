@@ -3,6 +3,7 @@ import 'package:Pratical_Food/HomePage.dart';
 import 'package:Pratical_Food/screens/ListaCompras.dart';
 import 'package:Pratical_Food/screens/PesquisaPage.dart';
 import 'package:flutter/material.dart';
+import 'package:Pratical_Food/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -59,8 +60,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.yellow[600],
+      appBar: AppBar(       
+        backgroundColor: Colors.yellow[600],  
         title: const Text('Pratical Food', style: TextStyle(color: Colors.black)),     
       ),
       body: _children[_selectedIndex],
