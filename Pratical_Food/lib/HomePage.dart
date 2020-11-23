@@ -30,103 +30,190 @@ class _HomePageState extends State<HomePage> {
     if(filtroPesquisa == '') filtroPesquisa = null;
     final guardarController = new TextEditingController();
     if (filtroPesquisa != null){
-      guardarController.text = filtroPesquisa;
     }
     return new Column(
-        children: <Widget>[
-          Expanded(
-            flex: 0,
-            child: Container(
-              child: Padding(padding: EdgeInsets.only(top: 10),
-                child: IconButton(
-                  tooltip: 'Adicionar filtros',
-                  icon: Icon(Icons.filter_alt, color: Colors.black), 
-                  onPressed: () async=> await showDialog(
-                    context: context,
-                    builder: (context){
-                      
-                      return new StatefulBuilder(
-                        builder: (context, setState){
-                          return Padding(
-                            padding: EdgeInsets.all(22),
-                            child: Card(                             
-                              child: Column(
-                                children: <Widget>[   
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 13)
-                                  ),  
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 10),
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                        hintText: '   Digite o nome de um ingrediente',
+            children: [
+    Container(
+  
+                child: Padding(padding: EdgeInsets.only(top: 10),
+  
+                  child: IconButton(
+  
+                    tooltip: 'Adicionar filtros',
+  
+                    icon: Icon(Icons.filter_alt, color: Colors.black), 
+  
+                    onPressed: () async=> await showDialog(
+  
+                      context: context,
+  
+                      builder: (context){
+  
+                        
+  
+                        return new StatefulBuilder(
+  
+                          builder: (context, setState){
+  
+                            return Padding(
+  
+                              padding: EdgeInsets.all(22),
+  
+                              child: Card(                             
+  
+                                child: Column(
+  
+                                  children: <Widget>[   
+  
+                                    Padding(
+  
+                                      padding: EdgeInsets.only(top: 13)
+  
+                                    ),  
+  
+                                    Padding(
+  
+                                      padding: EdgeInsets.only(left: 10),
+  
+                                      child: TextFormField(
+  
+                                        decoration: InputDecoration(
+  
+                                          hintText: '   Digite o nome de um ingrediente',
+  
+                                        ),
+  
+                                        controller: guardarController,
+  
+                                        onFieldSubmitted: (String filtr){
+  
+                                          setState(() {
+  
+                                            filtroPesquisa = guardarController.text;                
+  
+                                          });             
+  
+                                        },
+  
                                       ),
-                                      controller: guardarController,
-                                      onFieldSubmitted: (String filtr){
-                                        setState(() {
-                                          filtroPesquisa = guardarController.text;                
-                                        });             
-                                      },
+  
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: StreamBuilder<QuerySnapshot>(
-                                      stream: filtroPesquisa != null ? FirebaseFirestore.instance.collection('ingredientes').where('nome', isGreaterThanOrEqualTo: filtroPesquisa).where('nome', isLessThan: filtroPesquisa + 'z').snapshots(): FirebaseFirestore.instance.collection('ingredientes').snapshots(),
-                                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
-                                        if (!snapshot.hasData) return const Text('Carregando...');
-                                        final int ingredienteCount = snapshot.data.docs.length;
-                                        return ListView.builder(
-                                          itemCount: ingredienteCount,
-                                          itemBuilder: (_, index){
-                                            final DocumentSnapshot document = snapshot.data.docs[index];
-                                            dynamic message1 = document.data()['nome'];
-                                            String nomeIngrediente = message1 != null ? message1.toString() : 'Sem ingrediente!!!';
-                                            dynamic message5 = document.data()['ID'];
-                                            String id = message5 != null ? message5.toString() : 'sem ID';
-                                            return new Card(
-                                              child: Padding(padding: EdgeInsets.all(10),
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    child: Text(nomeIngrediente),
-                                                  ),
-                                                  Expanded(
-                                                    flex: 0, 
-                                                    child: FittedBox(
-                                                      fit: BoxFit.scaleDown,
-                                                      child: IconButton(tooltip: 'Adicionar filtro', icon: Icon(Icons.filter_alt),
-                                                      
-                                                        onPressed:(){
-                                                          setState(() {
-                                                            filtroNome.add(nomeIngrediente);
-                                                            filtroID.add(id);
-                                                          });
-                                                          
-                                                        } 
-                                                    )  
+  
+                                    Expanded(
+  
+                                      child: StreamBuilder<QuerySnapshot>(
+  
+                                        stream: filtroPesquisa != null ? FirebaseFirestore.instance.collection('ingredientes').where('nome', isGreaterThanOrEqualTo: filtroPesquisa).where('nome', isLessThan: filtroPesquisa + 'z').snapshots(): FirebaseFirestore.instance.collection('ingredientes').snapshots(),
+  
+                                        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+  
+                                          if (!snapshot.hasData) return const Text('Carregando...');
+  
+                                          final int ingredienteCount = snapshot.data.docs.length;
+  
+                                          return ListView.builder(
+  
+                                            itemCount: ingredienteCount,
+  
+                                            itemBuilder: (_, index){
+  
+                                              final DocumentSnapshot document = snapshot.data.docs[index];
+  
+                                              dynamic message1 = document.data()['nome'];
+  
+                                              String nomeIngrediente = message1 != null ? message1.toString() : 'Sem ingrediente!!!';
+  
+                                              dynamic message5 = document.data()['ID'];
+  
+                                              String id = message5 != null ? message5.toString() : 'sem ID';
+  
+                                              return new Card(
+  
+                                                child: Padding(padding: EdgeInsets.all(10),
+  
+                                                child: Row(
+  
+                                                  children: <Widget>[
+  
+                                                    Expanded(
+  
+                                                      child: Text(nomeIngrediente),
+  
+                                                    ),
+  
+                                                    Expanded(
+  
+                                                      flex: 0, 
+  
+                                                      child: FittedBox(
+  
+                                                        fit: BoxFit.scaleDown,
+  
+                                                        child: IconButton(tooltip: 'Adicionar filtro', icon: Icon(Icons.filter_alt),
+  
+                                                        
+  
+                                                          onPressed:(){
+  
+                                                            setState(() {
+  
+                                                              filtroNome.add(nomeIngrediente);
+  
+                                                              filtroID.add(id);
+  
+                                                            });
+  
+                                                            
+  
+                                                          } 
+  
+                                                      )  
+  
+                                                    )
+  
                                                   )
+  
+                                                  ],
+  
+                                                )                   
+  
                                                 )
-                                                ],
-                                              )                   
-                                              )
+  
+                                              );
+  
+                                              },                 
+  
                                             );
-                                            },                 
-                                          );
-                                        }
-                                      )
-                                  ),
-                                ],
-                              )                   
-                            )
-                          );
-                        }
-                      );
-                    }
-                  ).then((value) => setState((){}))
+  
+                                          }
+  
+                                        )
+  
+                                    ),
+  
+                                  ],
+  
+                                )                   
+  
+                              )
+  
+                            );
+  
+                          }
+  
+                        );
+  
+                      }
+  
+                    ).then((value) => setState((){}))
+  
+                  ),
+  
                 ),
+  
               ),
-            ),
-          ),
+],
+          );
           Expanded(child: GridView.builder(
             itemCount: filtroNome.length,           
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 7/2),
@@ -146,7 +233,7 @@ class _HomePageState extends State<HomePage> {
               );  
             }
           )
-          ),    
+          );   
           Expanded(
             flex: 5,
             child: FutureBuilder(
@@ -241,9 +328,7 @@ class _HomePageState extends State<HomePage> {
               }
             },
           )
-          )     
-        ]
-      );
+          );     
   }
 }
 

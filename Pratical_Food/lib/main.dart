@@ -1,12 +1,12 @@
 
 import 'package:Pratical_Food/authenticate/authenticate.dart';
 import 'package:Pratical_Food/screens/LoginPage.dart';
+import 'package:Pratical_Food/screens/MenuPage.dart';
 import 'package:Pratical_Food/services/auth.dart';
 import 'package:Pratical_Food/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Pratical_Food/screens/MenuPage.dart';
 import 'package:Pratical_Food/screens/CadastroPage.dart';
 import 'models/user.dart';
 
@@ -18,7 +18,7 @@ void main() async {
 
 class App extends StatelessWidget {
   @override
-   Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return StreamProvider<User>.value(
     value: AuthService().user,
     child: MaterialApp(
@@ -32,13 +32,13 @@ class App extends StatelessWidget {
     }));
   }
 
-  //     
-  //     
+  //
+  //
   //       home: LoginPage(),
   //     ),
   //   );
-    
+
   // }
 }
- //   return new MaterialApp(
- //     title: 'Practical Food',
+//   return new MaterialApp(
+//     title: 'Practical Food',

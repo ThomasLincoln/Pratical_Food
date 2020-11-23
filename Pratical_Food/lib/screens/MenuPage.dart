@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:Pratical_Food/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:Pratical_Food/services/auth.dart';
 
 class MenuPage extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   static const String _title = 'Flutter Code Sample';
 
- @override
+  @override
   Widget build(BuildContext context) {
 //     FirebaseFirestore.instance.collection('receitas').doc('nome').set({
 //       'nome': 'pinto',
@@ -42,12 +43,14 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+  final AuthService _auth = AuthService();
+
   int _selectedIndex = 0;
   //static const TextStyle optionStyle =
   //    TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   final List<Widget> _children = [
-    HomePage(),   
-    ListaCompras(),  
+    HomePage(),
+    ListaCompras(),
     FavoritosPage(),
     PesquisaPage(),
   ];
@@ -57,13 +60,22 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       _selectedIndex = index;
     });
   }
-@override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(       
-        backgroundColor: Colors.yellow[600],  
-        title: const Text('Pratical Food', style: TextStyle(color: Colors.black)),     
-      ),
+      appBar: AppBar(
+          backgroundColor: Colors.yellow[600],
+          title: const Text('Pratical Food',
+              style: TextStyle(color: Colors.black)),
+          actions: <Widget>[
+            FlatButton.icon(
+                icon: Icon(Icons.person),
+                label: Text('Deslogar'),
+                onPressed: () async {
+                  await _auth.signOut();
+                })
+          ]),
       body: _children[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -77,15 +89,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             title: Text('Carrinho'),
           ),
           BottomNavigationBarItem(
-            icon:
-             Icon(Icons.favorite),
+            icon: Icon(Icons.favorite),
             title: Text('Favoritos'),
-          ), 
+          ),
           BottomNavigationBarItem(
-            icon:
-             Icon(Icons.search),
+            icon: Icon(Icons.search),
             title: Text('Pesquisar'),
-          ),          
+          ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.yellow[800],
