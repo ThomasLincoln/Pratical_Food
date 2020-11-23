@@ -58,6 +58,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
           backgroundColor: Colors.yellow[600],
           title: const Text('Pratical Food',

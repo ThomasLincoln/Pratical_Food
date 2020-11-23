@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FeedbackPage extends StatefulWidget {
@@ -21,18 +23,34 @@ class _FeedbackPageState extends State<FeedbackPage> {
           padding: EdgeInsets.all(10),
           child: TextFormField(
             keyboardType: TextInputType.multiline,
-            maxLines: 10,
+            maxLines: 7,
             decoration: InputDecoration(             
               hintText: 'Nos dê sua opinião!',
               
             ),
             controller: guardarFeedbackController,
-            onFieldSubmitted: (String filtr){
+            onFieldSubmitted: (String message){
               setState(() {
                  feedback = guardarFeedbackController.text;                
               });             
             },
           ),
+        ),
+        Padding(
+          
+          padding: EdgeInsets.all(10),
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: IconButton(tooltip: 'Enviar Feedback', icon: Icon(Icons.send),
+              onPressed:()async{
+                FirebaseUser user = await FirebaseAuth.instance.currentUser();
+                FirebaseFirestore.instance.collection('usuarios').doc(user.uid).collection('feedback').add({
+                  'mensagem':feedback
+                });
+              } 
+          )  
+        )
+
         ),
         Padding(
           padding: EdgeInsets.all(10),

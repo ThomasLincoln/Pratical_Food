@@ -29,6 +29,7 @@ class _CadastroPageState extends State<CadastroPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
         body: Container(
       padding: EdgeInsets.only(
         top: 60,
