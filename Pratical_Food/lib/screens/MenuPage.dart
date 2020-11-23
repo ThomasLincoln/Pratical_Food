@@ -2,6 +2,7 @@ import 'package:Pratical_Food/screens/FavoritosPage.dart';
 import 'package:Pratical_Food/HomePage.dart';
 import 'package:Pratical_Food/screens/ListaCompras.dart';
 import 'package:Pratical_Food/screens/PesquisaPage.dart';
+import 'package:Pratical_Food/screens/FeedbackPage.dart';
 import 'package:flutter/material.dart';
 import 'package:Pratical_Food/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,14 +19,6 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
-//     FirebaseFirestore.instance.collection('receitas').doc('nome').set({
-//       'nome': 'pinto',
-//       'mano': 'queisso',
-//     });
-//     FirebaseFirestore.instance.collection("receitas").add({
-//     'name': "Tokyo",
-//     'country': "Japan"
-// });
     return MaterialApp(
       title: _title,
       home: MyStatefulWidget(),
@@ -53,6 +46,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     ListaCompras(),
     FavoritosPage(),
     PesquisaPage(),
+    FeedbackPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -93,9 +87,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             title: Text('Favoritos'),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text('Pesquisar'),
-          ),
+            icon:
+             Icon(Icons.search),
+            title: Text('Ingredientes', style: TextStyle(fontSize: 13)),
+          ),    
+          BottomNavigationBarItem(
+            icon: 
+            Icon(Icons.feedback),
+            title: Text('Feedback')
+          )      
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.yellow[800],
