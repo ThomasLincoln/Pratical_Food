@@ -1,6 +1,6 @@
 
-import 'package:Pratical_Food/authenticate/authenticate.dart';
-import 'package:Pratical_Food/screens/LoginPage.dart';
+//import 'package:Pratical_Food/authenticate/authenticate.dart';
+//import 'package:Pratical_Food/screens/LoginPage.dart';
 import 'package:Pratical_Food/screens/MenuPage.dart';
 import 'package:Pratical_Food/services/auth.dart';
 import 'package:Pratical_Food/wrapper.dart';

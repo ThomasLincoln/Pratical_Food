@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 
@@ -24,7 +24,7 @@ class Ingrediente{
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
+  
   String filtroPesquisa;
   Widget build(BuildContext context) {
     if(filtroPesquisa == '') filtroPesquisa = null;
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
           ),
           Expanded(child: GridView.builder(
             itemCount: filtroNome.length,           
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 7/2),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3, childAspectRatio: 9/3),
             itemBuilder: (BuildContext context, int index){
               return new GestureDetector(
                 onTap: (){
@@ -140,7 +140,9 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: Card(
                   child: new GridTile(
-                    child: Text(filtroNome[index], textAlign: TextAlign.center,)
+                    child: Container(
+                      child: Text(filtroNome[index], textAlign: TextAlign.center,)
+                    )//
                   ),
                 )
               );  

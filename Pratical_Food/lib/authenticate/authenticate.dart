@@ -1,4 +1,4 @@
-import 'package:Pratical_Food/authenticate/register.dart';
+//import 'package:Pratical_Food/authenticate/register.dart';
 import 'package:Pratical_Food/screens/CadastroPage.dart';
 import 'package:Pratical_Food/screens/LoginPage.dart';
 import 'package:flutter/material.dart';

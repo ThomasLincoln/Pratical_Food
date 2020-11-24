@@ -5,9 +5,9 @@ import 'package:Pratical_Food/screens/PesquisaPage.dart';
 import 'package:Pratical_Food/screens/FeedbackPage.dart';
 import 'package:flutter/material.dart';
 import 'package:Pratical_Food/services/auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:Pratical_Food/services/auth.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:firebase_core/firebase_core.dart';
+//import 'package:Pratical_Food/services/auth.dart';
 
 class MenuPage extends StatefulWidget {
   @override
@@ -77,25 +77,25 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            title: Text('Home'),
+            label: ('Home'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
-            title: Text('Carrinho'),
+            label:('Carrinho'),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
-            title: Text('Favoritos'),
+            label:('Favoritos'),
           ),
           BottomNavigationBarItem(
             icon:
              Icon(Icons.search),
-            title: Text('Ingredientes', style: TextStyle(fontSize: 13)),
+            label:('Ingredientes'), //AQUI
           ),    
           BottomNavigationBarItem(
             icon: 
             Icon(Icons.feedback),
-            title: Text('Feedback')
+            label: ('Feedback')
           )      
         ],
         currentIndex: _selectedIndex,

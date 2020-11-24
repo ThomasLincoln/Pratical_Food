@@ -10,7 +10,7 @@ class PesquisaPage extends StatefulWidget {
 }
 
 class _PesquisaPageState extends State<PesquisaPage> {
-  @override
+  
   String filtro;
   Widget build(BuildContext context) {
     if(filtro == '') filtro = null;
