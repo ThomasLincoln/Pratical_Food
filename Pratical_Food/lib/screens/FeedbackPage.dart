@@ -22,22 +22,28 @@ class _FeedbackPageState extends State<FeedbackPage> {
         Padding(
           padding: EdgeInsets.all(10),
           child: TextFormField(
+            
             keyboardType: TextInputType.multiline,
             maxLines: 7,
-            decoration: InputDecoration(             
+            decoration: InputDecoration(                        
               hintText: 'Nos dê sua opinião!',
+              suffixIcon: IconButton(
+              onPressed: () => guardarFeedbackController.clear(),
+              icon: Icon(Icons.clear),
+            ),  
               
             ),
             controller: guardarFeedbackController,
             onFieldSubmitted: (String message){
               setState(() {
-                 feedback = guardarFeedbackController.text;                
+                guardarFeedbackController.clear();       
+                feedback = guardarFeedbackController.text;        
+                
               });             
             },
           ),
         ),
-        Padding(
-          
+        Padding(          
           padding: EdgeInsets.all(10),
           child: FittedBox(
             fit: BoxFit.scaleDown,
@@ -45,7 +51,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
               onPressed:()async{
                 FirebaseUser user = await FirebaseAuth.instance.currentUser();
                 FirebaseFirestore.instance.collection('usuarios').doc(user.uid).collection('feedback').add({
-                  'mensagem':feedback
+                  'mensagem':guardarFeedbackController.text
                 });
               } 
           )  
